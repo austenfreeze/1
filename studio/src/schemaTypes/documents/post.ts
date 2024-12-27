@@ -1,9 +1,10 @@
-import {DocumentTextIcon} from '@sanity/icons'
-import {format, parseISO} from 'date-fns'
-import {defineField, defineType} from 'sanity'
+import { DocumentTextIcon } from '@sanity/icons'
+import { format, parseISO } from 'date-fns'
+import { defineField, defineType } from 'sanity'
+import { enUS } from 'date-fns/locale' // Optional: To handle multiple locales
 
 /**
- * Post schema.  Define and edit the fields for the 'post' content type.
+ * Post schema. Define and edit the fields for the 'post' content type.
  * Learn more: https://www.sanity.io/docs/schema-types
  */
 
@@ -58,9 +59,9 @@ export default defineType({
           title: 'Alternative text',
           description: 'Important for SEO and accessibility.',
           validation: (rule) => {
-            // Custom validation to ensure alt text is provided if the image is present. https://www.sanity.io/docs/validation
-            return rule.custom((alt, context) => {
-              if ((context.document?.coverImage as any)?.asset?._ref && !alt) {
+            return rule.custom((alt: string, context) => {
+              const coverImageRef = (context.document?.coverImage as any)?.asset?._ref
+              if (coverImageRef && (!alt || !alt.trim())) {
                 return 'Required'
               }
               return true
@@ -80,10 +81,10 @@ export default defineType({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: [{type: 'person'}],
+      to: [{ type: 'person' }],
     }),
   ],
-  // List preview configuration. https://www.sanity.io/docs/previews-list-views
+  // List preview configuration.
   preview: {
     select: {
       title: 'title',
@@ -92,13 +93,14 @@ export default defineType({
       date: 'date',
       media: 'coverImage',
     },
-    prepare({title, media, authorFirstName, authorLastName, date}) {
+    prepare({ title, media, authorFirstName, authorLastName, date }) {
       const subtitles = [
         authorFirstName && authorLastName && `by ${authorFirstName} ${authorLastName}`,
-        date && `on ${format(parseISO(date), 'LLL d, yyyy')}`,
+        date && `on ${format(parseISO(date), 'LLL d, yyyy', { locale: enUS })}`,
       ].filter(Boolean)
 
-      return {title, media, subtitle: subtitles.join(' ')}
+      return { title, media, subtitle: subtitles.join(' - ') }
     },
   },
+  
 })

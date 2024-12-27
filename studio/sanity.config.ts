@@ -16,9 +16,16 @@ import {
   type DocumentLocation,
 } from 'sanity/presentation'
 import {assist} from '@sanity/assist'
+import {media} from 'sanity-plugin-media'
+import {
+  dashboardTool,
+  sanityTutorialsWidget,
+  projectUsersWidget,
+  projectInfoWidget,
+} from "@sanity/dashboard";
 
 // Environment variables for project configuration
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'b84na8h5'
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
 
 // URL for preview functionality, defaults to localhost:3000 if not set
@@ -53,6 +60,15 @@ export default defineConfig({
   dataset,
 
   plugins: [
+
+    dashboardTool({ 
+      widgets: [
+        sanityTutorialsWidget(),
+        projectInfoWidget(),
+        projectUsersWidget(),
+      ],
+    }),
+    media(),
     // Presentation tool configuration for Visual Editing
     presentationTool({
       previewUrl: {

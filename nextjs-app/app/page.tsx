@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import Link from "next/link";
 
 import { AllPosts } from "@/app/components/Posts";
-import GetStartedCode from "@/app/components/GetStartedCode";
 
 export default async function Page() {
   return (
@@ -36,8 +35,7 @@ export default async function Page() {
               </p>
             </div>
             <div className="flex items-center flex-col gap-4">
-              <GetStartedCode />
-              <Link
+                 <Link
                 href="https://www.sanity.io/docs"
                 className="inline-flex text-red-500 text-xs md:text-sm underline hover:text-gray-900"
                 target="_blank"
