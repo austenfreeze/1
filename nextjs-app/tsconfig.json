@@ -28,6 +28,8 @@
   },
   "include": [
     "app/**/*.tsx" // Only include necessary files
+    ,
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
