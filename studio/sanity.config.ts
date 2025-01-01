@@ -1,75 +1,58 @@
-/**
- * This config is used to configure your Sanity Studio.
- * Learn more: https://www.sanity.io/docs/configuration
- */
-
-import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './src/schemaTypes'
-import {structure} from './src/structure'
-import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import { structure } from './src/structure';
+import { defineConfig } from 'sanity';
+import { structureTool } from 'sanity/structure';
+import { visionTool } from '@sanity/vision';
+import { schemaTypes } from './src/schemaTypes';
+import { tags } from 'sanity-plugin-tags';
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 import {
   presentationTool,
   defineDocuments,
   defineLocations,
   type DocumentLocation,
-} from 'sanity/presentation'
-import {assist} from '@sanity/assist'
-import {media} from 'sanity-plugin-media'
+} from 'sanity/presentation';
+import { assist } from '@sanity/assist';
+import { media } from 'sanity-plugin-media';
 import {
   dashboardTool,
   sanityTutorialsWidget,
   projectUsersWidget,
   projectInfoWidget,
-} from "@sanity/dashboard";
+} from '@sanity/dashboard';
 
 // Environment variables for project configuration
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'b84na8h5'
-const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'b84na8h5';
+const dataset = process.env.SANITY_STUDIO_DATASET || 'production';
 
 // URL for preview functionality, defaults to localhost:3000 if not set
-const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000'
+const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000';
 
 // Define the home location for the presentation tool
 const homeLocation = {
   title: 'Home',
   href: '/',
-} satisfies DocumentLocation
-
-// resolveHref() is a convenience function that resolves the URL
-// path for different document types and used in the presentation tool.
-function resolveHref(documentType?: string, slug?: string): string | undefined {
-  switch (documentType) {
-    case 'post':
-      return slug ? `/posts/${slug}` : undefined
-    case 'page':
-      return slug ? `/${slug}` : undefined
-    default:
-      console.warn('Invalid document type:', documentType)
-      return undefined
-  }
-}
+} satisfies DocumentLocation;
 
 // Main Sanity configuration
 export default defineConfig({
   name: 'default',
-  title: 'Clean Next.js + Sanity',
-
+  title: 'acf',  // Customize the title of your studio
+  structure,
   projectId,
   dataset,
 
+  // Plugins
   plugins: [
-
-    dashboardTool({ 
+    dashboardTool({
       widgets: [
         sanityTutorialsWidget(),
         projectInfoWidget(),
         projectUsersWidget(),
       ],
     }),
-    media(),
-    // Presentation tool configuration for Visual Editing
+
+    media(), // Media plugin for asset handling
+
     presentationTool({
       previewUrl: {
         origin: SANITY_STUDIO_PREVIEW_URL,
@@ -78,7 +61,6 @@ export default defineConfig({
         },
       },
       resolve: {
-        // The Main Document Resolver API provides a method of resolving a main document from a given route or route pattern. https://www.sanity.io/docs/presentation-resolver-api#57720a5678d9
         mainDocuments: defineDocuments([
           {
             route: '/:slug',
@@ -89,7 +71,6 @@ export default defineConfig({
             filter: `_type == "post" && slug.current == $slug || _id == $slug`,
           },
         ]),
-        // Locations Resolver API allows you to define where data is being used in your application. https://www.sanity.io/docs/presentation-resolver-api#8d8bca7bfcd7
         locations: {
           settings: defineLocations({
             locations: [homeLocation],
@@ -131,17 +112,36 @@ export default defineConfig({
         },
       },
     }),
+
     structureTool({
       structure, // Custom studio structure configuration, imported from ./src/structure.ts
     }),
-    // Additional plugins for enhanced functionality
-    unsplashImageAsset(),
-    assist(),
-    visionTool(),
+
+    tags({}), // Tags plugin
+
+    unsplashImageAsset(), // Unsplash plugin for image assets
+
+    assist(), // Assist plugin for AI assistance
+
+    visionTool(), // Vision plugin for analyzing content
+
   ],
 
-  // Schema configuration, imported from ./src/schemaTypes/index.ts
+  // Schema configuration
   schema: {
     types: schemaTypes,
   },
-})
+});
+
+// ResolveHref function to build the URL
+function resolveHref(documentType?: string, slug?: string): string | undefined {
+  switch (documentType) {
+    case 'post':
+      return slug ? `/posts/${slug}` : undefined;
+    case 'page':
+      return slug ? `/${slug}` : undefined;
+    default:
+      console.warn('Invalid document type:', documentType);
+      return undefined;
+  }
+}

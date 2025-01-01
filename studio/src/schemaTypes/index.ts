@@ -1,23 +1,37 @@
-import person from './documents/person'
-import page from './documents/page'
-import post from './documents/post'
-import callToAction from './objects/callToAction'
-import infoSection from './objects/infoSection'
-import settings from './singletons/settings'
-import link from './objects/link'
-import blockContent from './objects/blockContent'
-import trackerElement from './objects/trackerElement';
-import tracker from './documents/tracker';
+/* DOCUMENTS */
+import user from './documents/user'
+import project from './documents/project'
+import headlines from './documents/headlines'
 
+/* OBJECTS */
+import headline from './objects/headline'
+import corsObject from './objects/corsObject'
+import sanityConfigObject from './objects/sanityConfigObject'
+import vercelConfigObject from './objects/vercelConfigObject'
+import sanityApiTokens from './objects/sanityApiTokens'
+import sanityPlugins from './objects/sanityPlugins'
+import sanityTools from './objects/sanityTools'
+import sanityUpgrade from './objects/sanityUpgrade'
+import post from './documents/post'
+import task from './objects/task' 
+import taskDocument from './documents/taskDocument'
+import blockContent from './objects/blockContent'
 export const schemaTypes = [
-  settings,
-  page,
+  /* DOCUMENTS */
+  user,
+  project,
+  headlines,
   post,
-  person,
-  blockContent,
-  infoSection,
-  callToAction,
-  link,
-  trackerElement,
-  tracker,
-]
+  taskDocument,
+
+  /* OBJECTS */
+  headline,
+  corsObject,
+  sanityConfigObject,
+  vercelConfigObject,
+  sanityApiTokens,
+  sanityPlugins,
+  sanityTools,
+  sanityUpgrade,
+  task,
+blockContent]

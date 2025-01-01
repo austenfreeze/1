@@ -24,10 +24,15 @@
     "concurrently": "^9.1.0"
   },
   "dependencies": {
+    "@portabletext/react": "^3.2.0",
+    "@sanity/cli": "^3.68.3",
     "@sanity/dashboard": "^4.1.2",
+    "@sanity/structure": "^2.36.2",
     "antd": "^5.22.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sanity-plugin-media": "^2.3.2"
+    "sanity-plugin-media": "^2.3.2",
+    "sanity-plugin-tags": "^2.1.1",
+    "styled-components": "^6.1.13"
   }
 }

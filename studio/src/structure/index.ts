@@ -1,22 +1,24 @@
-import {CogIcon} from '@sanity/icons'
-import type {StructureResolver} from 'sanity/structure'
+// /home/sten/Desktop/1/studio/src/structure/index.ts
 
-/**
- * Structure builder is useful whenever you want to control how documents are grouped and
- * listed in the studio or for adding additional in-studio previews or content to documents.
- * Learn more: https://www.sanity.io/docs/structure-builder-introduction
- */
+import { StructureBuilder } from 'sanity/structure';
+import headlineStructure from './headlineStructure'; // Correct import path
 
-export const structure: StructureResolver = (S: any) =>
-  S.list()
-    .title('Website Content')
+export const structure = (S: StructureBuilder) => {
+  return S.list()
+    .title('Content')
     .items([
-      S.documentTypeListItem('post').title('Posts'),
-      S.documentTypeListItem('page').title('Pages'),
-      S.documentTypeListItem('person').title('People'),
-      // Settings Singleton in order to view/edit the one particular document for Settings.  Learn more about Singletons: https://www.sanity.io/docs/create-a-link-to-a-single-edit-page-in-your-main-document-type-list
+      // Directly include headlineStructure as part of the structure
+      headlineStructure(S),  // Now you're calling the structure function correctly
+      
+      // Example for Posts section
       S.listItem()
-        .title('Site Settings')
-        .child(S.document().schemaType('settings').documentId('siteSettings'))
-        .icon(CogIcon),
-    ])
+        .title('Posts')
+        .schemaType('post')
+        .child(
+          S.documentList()
+            .title('All Posts')
+            .filter('_type == "post"')
+        ),
+    ]);
+};
+

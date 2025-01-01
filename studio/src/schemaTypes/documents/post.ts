@@ -1,106 +1,31 @@
-import { DocumentTextIcon } from '@sanity/icons'
-import { format, parseISO } from 'date-fns'
-import { defineField, defineType } from 'sanity'
-import { enUS } from 'date-fns/locale' // Optional: To handle multiple locales
-
-/**
- * Post schema. Define and edit the fields for the 'post' content type.
- * Learn more: https://www.sanity.io/docs/schema-types
- */
+import { defineType, defineField } from 'sanity';
 
 export default defineType({
-  name: 'post',
-  title: 'Post',
-  icon: DocumentTextIcon,
-  type: 'document',
-  fields: [
-    defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      description: 'A slug is required for the post to show up in the preview',
-      options: {
-        source: 'title',
-        maxLength: 96,
-        isUnique: (value, context) => context.defaultIsUnique(value, context),
-      },
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'content',
-      title: 'Content',
-      type: 'blockContent',
-    }),
-    defineField({
-      name: 'excerpt',
-      title: 'Excerpt',
-      type: 'text',
-    }),
-    defineField({
-      name: 'coverImage',
-      title: 'Cover Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-        aiAssist: {
-          imageDescriptionField: 'alt',
-        },
-      },
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative text',
-          description: 'Important for SEO and accessibility.',
-          validation: (rule) => {
-            return rule.custom((alt: string, context) => {
-              const coverImageRef = (context.document?.coverImage as any)?.asset?._ref
-              if (coverImageRef && (!alt || !alt.trim())) {
-                return 'Required'
-              }
-              return true
-            })
-          },
-        },
-      ],
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'date',
-      title: 'Date',
-      type: 'datetime',
-      initialValue: () => new Date().toISOString(),
-    }),
-    defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: [{ type: 'person' }],
-    }),
-  ],
-  // List preview configuration.
-  preview: {
-    select: {
-      title: 'title',
-      authorFirstName: 'author.firstName',
-      authorLastName: 'author.lastName',
-      date: 'date',
-      media: 'coverImage',
-    },
-    prepare({ title, media, authorFirstName, authorLastName, date }) {
-      const subtitles = [
-        authorFirstName && authorLastName && `by ${authorFirstName} ${authorLastName}`,
-        date && `on ${format(parseISO(date), 'LLL d, yyyy', { locale: enUS })}`,
-      ].filter(Boolean)
-
-      return { title, media, subtitle: subtitles.join(' - ') }
-    },
-  },
-  
-})
+    name: 'post',
+    title: 'Post',
+    type: 'document',
+    fields: [
+        defineField({
+            name: 'title',
+            title: 'title',
+            type: 'array',
+            of: [{type: 'blockContent'}],
+        }),
+        defineField({
+            name: 'date',
+            title: 'date',
+            type: 'datetime',
+        }),
+        defineField({
+            name: 'post',
+            title: 'Post Content',
+            type: 'string', // You can change this to another type if needed (e.g., 'text' or 'blockContent')
+        }),
+        defineField({
+            name: 'camclip',
+            title: 'camclip',
+            type: 'file',
+            description: '',
+        })
+    ],
+});
