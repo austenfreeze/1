@@ -1,5 +1,5 @@
-import { structure } from './src/structure';
 import { defineConfig } from 'sanity';
+import { structure } from './src/structure';
 import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './src/schemaTypes';
@@ -19,6 +19,7 @@ import {
   projectUsersWidget,
   projectInfoWidget,
 } from '@sanity/dashboard';
+import { client } from './src/lib/sanityClient'; // Import your client if needed
 
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'b84na8h5';
@@ -117,19 +118,36 @@ export default defineConfig({
       structure, // Custom studio structure configuration, imported from ./src/structure.ts
     }),
 
-    tags({}), // Tags plugin
-
+    tags({
+      options: {
+        includeFromReference: true, // Enable reference inclusion for autocomplete
+        allowCreate: true, // Allow the creation of new tags
+        onCreate: async (inputValue: string) => {
+          // Create the new tag based on input
+          const newTag = {
+            _type: 'tag',
+            label: inputValue,
+            value: inputValue.toLowerCase().replace(/\s+/g, '-'), // Make it URL friendly
+          };
+          return newTag; // Return the created tag object
+        },
+        reactSelectOptions: {
+          // Customize the react-select options if needed
+          label: 'tag',
+          value: 'value',
+        },
+      },
+    }),
     unsplashImageAsset(), // Unsplash plugin for image assets
 
     assist(), // Assist plugin for AI assistance
 
     visionTool(), // Vision plugin for analyzing content
-
   ],
 
   // Schema configuration
   schema: {
-    types: schemaTypes,
+    types: schemaTypes, // Import your schema types here
   },
 });
 

@@ -6,20 +6,30 @@ export default defineType({
     type: 'document',
     fields: [
         defineField({
-            name: 'title',
-            title: 'title',
+            name: 'displayTitle',
+            title: 'Display Title',
+            type: 'string',
+        }),
+        defineField({
+            name: 'seotitle',
+            title: 'SEO Title',
+            type: 'string',
+        }),
+        defineField({
+            name: 'subtitle',
+            title: 'subtitle:',
+            type: 'string',
+        }),
+        {
+            name: 'content',
+            title: 'content',
             type: 'array',
             of: [{type: 'blockContent'}],
-        }),
+        },
         defineField({
             name: 'date',
             title: 'date',
             type: 'datetime',
-        }),
-        defineField({
-            name: 'post',
-            title: 'Post Content',
-            type: 'string', // You can change this to another type if needed (e.g., 'text' or 'blockContent')
         }),
         defineField({
             name: 'camclip',
