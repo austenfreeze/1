@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity';
+import {defineType, defineField} from 'sanity'
 
 export default defineType({
   name: 'article', // Properly closed string for 'name'
@@ -19,7 +19,7 @@ export default defineType({
       name: 'drafting',
       title: 'Drafting',
       type: 'array',
-      of: [{ type: 'blockContent' }] // Correctly defined the array of 'blockContent' type
-    })
-  ]
-});
+      of: [{type: 'blockContent'}], // Correctly defined the array of 'blockContent' type
+    }),
+  ],
+})

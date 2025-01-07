@@ -1,87 +1,118 @@
 import { StructureBuilder } from 'sanity/structure';
-import headlineStructure from './headlineStructure'; // Correct import path
+import { GiLuckyFisherman } from 'react-icons/gi'; // Icon for 'Headlines'
 
 export const structure = (S: StructureBuilder) => {
   return S.list()
     .title('Content')
     .items([
-      headlineStructure(S),  // Include headlineStructure as part of the structure
-
-      // Example for "Project (Root)"
+      // Headline Structure with Icon
       S.listItem()
-        .title('Projects')
-        .schemaType('project')
+        .title('Headlines')
+        .icon(GiLuckyFisherman)  // Add the icon to the Headlines section
         .child(
           S.documentList()
-            .title('Root Project')
+            .title('Headlines')
+            .filter('_type == "headline"')
+        ),
+        
+      // Spotlight Page as Singleton Document
+      S.listItem()
+        .title('Spotlight')
+        .child(
+          S.document()
+            .title('Spotlight Page')
+            .schemaType('spotLightPage') // Reference the correct schema type
+            .id('spotlightPage')  // Specific ID for the singleton document
+        ),
+
+      // Projects Section
+      S.listItem()
+        .title('Projects')
+        .child(
+          S.documentList()
+            .title('Projects')
             .filter('_type == "project"')
         ),
 
+      // Task Tracker Section
       S.listItem()
         .title('Task Tracker')
-        .schemaType('taskTrackerSystem')  // Ensure this is the correct schema type
         .child(
           S.documentList()
-            .title('Task and Tracker Document')
-            .schemaType('taskTrackerSystem')  // Ensure this is the correct schema type
-            .filter('_type == "taskTrackerSystem"')  // Correct filtering for the single taskandtracker document
+            .title('Task Tracker')
+            .filter('_type == "taskTrackerSystem"')
         ),
-      
-      // Example for "Posts" section
-      S.listItem()
-        .title('Posts')
-        .schemaType('post')
-        .child(
-          S.documentList()
-            .title('Posts Work Up To Articles')
-            .filter('_type == "post"')
-        ),
-              // Article
-      S.listItem()
-      .title('Articles')
-      .schemaType('article')
-      .child(
-        S.documentList()
-          .title('Articles')
-          .filter('_type == "article"')
-      ),
 
-                      // Example for "Notes"
+      // Publish Section with Dropdown
       S.listItem()
-      .title('Notes')
-      .schemaType('notes')
-      .child(
-        S.documentList()
-          .title('All Notes')
-          .filter('_type == "notes"')
-      ),
-
-      // Add the "Free Samples" option under the same "Posts" section
-      S.listItem()
-        .title('Free Samples')
-        .schemaType('freesamples')  // Make sure this matches the name of your freesamples schema
+        .title('Publish')
         .child(
-          S.documentList()
-            .title('All Free Samples')
-            .filter('_type == "freesamples"')
-        ),
-              // FOIA
+          S.list()
+            .title('Publish')
+            .items([
+              // Posts Section
               S.listItem()
-              .title('FOIA Release')
-              .schemaType('foia')
-              .child(
-                S.documentList()
-                  .title('All FOIA')
-                  .filter('_type == "foia"')
-              ),
-                            // STEN QOUTES
-                            S.listItem()
-                            .title('STEN Qoutes')
-                            .schemaType('stenqoutes')
-                            .child(
-                              S.documentList()
-                                .title('All STEN QOUTES')
-                                .filter('_type == "stenqoutes"')
-                            ),
+                .title('Posts')
+                .child(
+                  S.documentList()
+                    .title('Posts')
+                    .filter('_type == "post"')
+                ),
+              
+              // Articles Section
+              S.listItem()
+                .title('Articles')
+                .child(
+                  S.documentList()
+                    .title('Articles')
+                    .filter('_type == "article"')
+                ),
+              
+              // Notes Section
+              S.listItem()
+                .title('Notes')
+                .child(
+                  S.documentList()
+                    .title('Notes')
+                    .filter('_type == "notes"')
+                ),
+              
+              // Free Samples Section
+              S.listItem()
+                .title('Free Samples')
+                .child(
+                  S.documentList()
+                    .title('Free Samples')
+                    .filter('_type == "freesamples"')
+                ),
+              
+              // FOIA Release Section
+              S.listItem()
+                .title('FOIA Release')
+                .child(
+                  S.documentList()
+                    .title('FOIA Release')
+                    .filter('_type == "foia"')
+                ),
+              
+              // STEN Quotes Section
+              S.listItem()
+                .title('STEN Quotes')
+                .child(
+                  S.documentList()
+                    .title('STEN Quotes')
+                    .filter('_type == "stenquotes"')
+                ),
+              
+              // Spotlight Articles under Publish
+              S.listItem()
+                .title('Spotlight Articles')
+                .child(
+                  S.documentList()
+                    .title('Spotlight Articles')
+                    .filter('_type == "spotlightArticle"')  // Assuming this is your spotlight articles type
+                ),
+            ])
+        ),
     ]);
 };

@@ -1,6 +1,5 @@
 import { defineType, defineField } from 'sanity';
 
-
 export default defineType({
   name: 'vercelConfigObject',
   title: 'Vercel Hosting',
@@ -10,7 +9,7 @@ export default defineType({
       name: 'vercelDeployment',
       title: 'Vercel Deployment Links:',
       type: 'array',
-      of: [{type: 'url'}],
+      of: [{ type: 'url' }],
       fieldset: 'vercel',
     }),
     defineField({
@@ -22,6 +21,6 @@ export default defineType({
     }),
   ],
   fieldsets: [
-    {name: 'vercel', title: 'VERCEL',},
+    { name: 'vercel', title: 'VERCEL', options: { collapsed: true } },
   ],
 });

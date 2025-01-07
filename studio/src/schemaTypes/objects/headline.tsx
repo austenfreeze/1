@@ -1,10 +1,13 @@
 // /schemas/objects/headline.ts
 import { defineType, defineField } from 'sanity';
+import { GiNewspaper } from "react-icons/gi";
+
 
 export default defineType({
   name: 'headline',
   title: 'Headline',
   type: 'document',
+  icon: GiNewspaper,
   fields: [
     defineField({
       name: 'title',

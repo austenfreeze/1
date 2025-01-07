@@ -24,6 +24,14 @@ export default defineType({
         type: 'datetime',
     }),
     defineField({
+      name: 'notes',
+      title: 'notes',
+      type: 'array',
+      of: [{type: 'reference',
+          to: [{type: 'notes',}],
+      }],
+  }),
+    defineField({
       name: 'tags',
       title: 'Tags',
       type: 'tags', // Use the plugin's tag type
