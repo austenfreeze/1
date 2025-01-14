@@ -1,5 +1,4 @@
 import { defineType, defineField } from 'sanity';
-import {PlugIcon} from '@sanity/icons'
 import {WrenchIcon} from '@sanity/icons'
 
 export default defineType({
@@ -12,6 +11,11 @@ export default defineType({
       name: 'toolName',
       title: 'Sanity Tool Name:',
       type: 'string',
+    }),
+    defineField({
+        name: 'toolDescription',
+        title: 'Tool Description',
+        type: 'text',
     }),
     defineField({
         name: 'toolDoc',
@@ -35,4 +39,19 @@ export default defineType({
         type: 'text',
     }),
     ],
+    preview: {
+        select: {
+          title: 'toolName',
+          subtitle: 'toolDescription',
+          media: 'icon', // No media field defined, you could use a custom icon or image
+        },
+        prepare(selection) {
+          const { title, subtitle, media } = selection;
+          return {
+            title: title || 'Untitled',
+            subtitle: subtitle || 'No description',
+            media: media || WrenchIcon, // Use default icon if no media is set
+          };
+        },
+      },
 })

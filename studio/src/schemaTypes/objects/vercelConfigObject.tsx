@@ -10,17 +10,12 @@ export default defineType({
       title: 'Vercel Deployment Links:',
       type: 'array',
       of: [{ type: 'url' }],
-      fieldset: 'vercel',
     }),
     defineField({
       name: 'domain',
       title: 'Vercel Domains:',
       type: 'array',
       of: [{ type: 'url' }],
-      fieldset: 'vercel',
     }),
-  ],
-  fieldsets: [
-    { name: 'vercel', title: 'VERCEL', options: { collapsed: true } },
   ],
 });

@@ -27,6 +27,6 @@ export default defineType({
     }),
   ],
   fieldsets: [
-    { name: 'github', title: 'GITHUB', options: { collapsed: true } },
+    { name: 'github', title: 'GITHUB',},
   ],
 });

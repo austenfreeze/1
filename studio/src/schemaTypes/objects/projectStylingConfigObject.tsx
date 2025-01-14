@@ -14,6 +14,6 @@ fields: [
     }),
 ],
 fieldsets: [
-    { name: 'iconlibs', title: 'Icon Libraries', options: { collapsed: true } },
+    { name: 'iconlibs', title: 'Icon Libraries',},
 ],
 });

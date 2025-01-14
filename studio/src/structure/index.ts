@@ -1,10 +1,39 @@
 import { StructureBuilder } from 'sanity/structure';
 import { GiLuckyFisherman } from 'react-icons/gi'; // Icon for 'Headlines'
+import { FaTasks } from 'react-icons/fa'; // Icon for 'Task Tracker'
+import { GiSettingsKnobs } from 'react-icons/gi'; // Icon for 'Studio Settings'
 
 export const structure = (S: StructureBuilder) => {
   return S.list()
     .title('Content')
     .items([
+      // Studio Settings Singleton Section (moved to the top)
+      S.listItem()
+        .title('Studio Settings')
+        .icon(GiSettingsKnobs)  // Choose an appropriate icon for Studio Settings
+        .child(
+          S.document()
+            .title('Studio Settings')
+            .schemaType('studioSettings')  // Reference the correct schema type
+            .id('studioSettings')  // Set a specific ID to make this a singleton
+        ),
+      // Divider after Studio Settings
+      S.divider(),
+
+      // Task Tracker Singleton Section (moved to the top)
+      S.listItem()
+        .title('Task Tracker')
+        .icon(FaTasks)  // Add an appropriate icon for Task Tracker
+        .child(
+          S.document()
+            .title('Task Tracker System')
+            .schemaType('taskTrackerSystem')  // Reference the correct schema type
+            .id('taskTrackerSystem')  // Set a specific ID to make this a singleton
+        ),
+        
+      // Divider after Task Tracker
+      S.divider(),
+
       // Headline Structure with Icon
       S.listItem()
         .title('Headlines')
@@ -12,7 +41,7 @@ export const structure = (S: StructureBuilder) => {
         .child(
           S.documentList()
             .title('Headlines')
-            .filter('_type == "headline"')
+            .filter('_type == "headline"')  // Ensure this matches your schema type
         ),
         
       // Spotlight Page as Singleton Document
@@ -31,16 +60,7 @@ export const structure = (S: StructureBuilder) => {
         .child(
           S.documentList()
             .title('Projects')
-            .filter('_type == "project"')
-        ),
-
-      // Task Tracker Section
-      S.listItem()
-        .title('Task Tracker')
-        .child(
-          S.documentList()
-            .title('Task Tracker')
-            .filter('_type == "taskTrackerSystem"')
+            .filter('_type == "project"')  // Ensure this matches your schema type
         ),
 
       // Publish Section with Dropdown
@@ -56,7 +76,7 @@ export const structure = (S: StructureBuilder) => {
                 .child(
                   S.documentList()
                     .title('Posts')
-                    .filter('_type == "post"')
+                    .filter('_type == "post"')  // Ensure this matches your schema type
                 ),
               
               // Articles Section
@@ -65,7 +85,7 @@ export const structure = (S: StructureBuilder) => {
                 .child(
                   S.documentList()
                     .title('Articles')
-                    .filter('_type == "article"')
+                    .filter('_type == "article"')  // Ensure this matches your schema type
                 ),
               
               // Notes Section
@@ -74,7 +94,7 @@ export const structure = (S: StructureBuilder) => {
                 .child(
                   S.documentList()
                     .title('Notes')
-                    .filter('_type == "notes"')
+                    .filter('_type == "notes"')  // Ensure this matches your schema type
                 ),
               
               // Free Samples Section
@@ -83,7 +103,7 @@ export const structure = (S: StructureBuilder) => {
                 .child(
                   S.documentList()
                     .title('Free Samples')
-                    .filter('_type == "freesamples"')
+                    .filter('_type == "freesamples"')  // Ensure this matches your schema type
                 ),
               
               // FOIA Release Section
@@ -92,7 +112,7 @@ export const structure = (S: StructureBuilder) => {
                 .child(
                   S.documentList()
                     .title('FOIA Release')
-                    .filter('_type == "foia"')
+                    .filter('_type == "foia"')  // Ensure this matches your schema type
                 ),
               
               // STEN Quotes Section
@@ -101,7 +121,7 @@ export const structure = (S: StructureBuilder) => {
                 .child(
                   S.documentList()
                     .title('STEN Quotes')
-                    .filter('_type == "stenquotes"')
+                    .filter('_type == "stenquotes"')  // Ensure this matches your schema type
                 ),
               
               // Spotlight Articles under Publish
@@ -110,8 +130,25 @@ export const structure = (S: StructureBuilder) => {
                 .child(
                   S.documentList()
                     .title('Spotlight Articles')
-                    .filter('_type == "spotlightArticle"')  // Assuming this is your spotlight articles type
+                    .filter('_type == "spotlightArticle"')  // Ensure this matches your schema type
                 ),
+                S.listItem()
+                .title('Image')
+                .child(
+                  S.documentList()
+                    .title('Image Card')
+                    .filter('_type == "imageCardDoc"')
+                    .id('imageCard')  // Add an ID for this list
+                ),              
+              S.listItem()
+              .title('Image Gallery')
+              .child(
+                S.documentList()
+                .title('Image Gallery Collections')
+              .filter('_type == "imageGalleryDoc"')
+              .id('imageGallery')
+            ),
+
             ])
         ),
     ]);

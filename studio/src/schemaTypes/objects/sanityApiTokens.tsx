@@ -19,4 +19,19 @@ export default defineType({
             icon: ApiIcon,
         }),
     ],
+    preview: {
+        select: {
+          title: 'name',
+          subtitle: 'value',
+          media: 'icon', // No media field defined, you could use a custom icon or image
+        },
+        prepare(selection) {
+          const { title, subtitle, media } = selection;
+          return {
+            title: title || 'Untitled',
+            subtitle: subtitle || 'No description',
+            media: media || ApiIcon, // Use default icon if no media is set
+          };
+        },
+      },
 });

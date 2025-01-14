@@ -4,7 +4,7 @@ import project from './documents/project';
 import headlines from './documents/headlines';
 import task from './documents/task';
 import tracker from './documents/tracker';
-import taskTrackerSystem from './documents/taskTrackerSystem';
+import taskTrackerSystem from './singletons/taskTrackerSystem'; // Updated path to singleton
 import notes from './documents/notes';
 import tagSettings from './objects/tagSettings';
 import foia from './documents/foia';
@@ -17,6 +17,9 @@ import entity from './documents/entity';
 import association from './documents/association';
 import { pageType } from './documents/pageType';
 import spotlightPage from './documents/spotlightPage';
+import studioSettings from './singletons/studioSettings';
+import topic from './documents/topic';
+
 
 /* OBJECTS */
 import headline from './objects/headline';
@@ -40,8 +43,12 @@ import zing from './objects/zing';
 import headlineArray from './objects/headlineArray';
 import spotlightArticle from './documents/spotlightArticle';
 import spotlightContainer from './objects/spotlightContainer';
-import spotlightPreviewObject from './documents/spotlightPreviewObject';
-
+import spotlightPreviewObject from './objects/spotlightPreviewObject';
+import imageGallery from './objects/imageGallery';
+import imageCard from './objects/imageCard';
+import imageCardDoc from './documents/imageCard';
+import imageGalleryDoc from './documents/imageGallery';
+import galleryReference from './objects/galleryReference';
 
 export const schemaTypes = [
   /* DOCUMENTS */
@@ -51,7 +58,7 @@ export const schemaTypes = [
   post,
   task,
   tracker,
-  taskTrackerSystem,
+  taskTrackerSystem, // Now correctly imported from the singletons directory
   notes,
   tagSettings,
   freesamples,
@@ -65,6 +72,10 @@ export const schemaTypes = [
   pageType,
   spotlightArticle,
   spotlightPage,
+  studioSettings,
+  imageCardDoc,
+  imageGalleryDoc,
+  topic,
 
 
   /* OBJECTS */
@@ -88,4 +99,7 @@ export const schemaTypes = [
   headlineArray,
   spotlightContainer,
   spotlightPreviewObject,
+  imageGallery,
+  imageCard,
+  galleryReference,
 ];

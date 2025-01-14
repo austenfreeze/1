@@ -13,6 +13,11 @@ export default defineType({
       type: 'string',
     }),
     defineField({
+        name: 'pluginDescription',
+        title: 'Plugin Description',
+        type: 'text',
+    }),
+    defineField({
         name: 'pluginDoc',
         title: 'Sanity Plugin Documentation:',
         type: 'url',
@@ -34,4 +39,19 @@ export default defineType({
         type: 'text',
     }),
     ],
+    preview: {
+        select: {
+          title: 'pluginName',
+          subtitle: 'pluginDescription',
+          media: 'icon', // No media field defined, you could use a custom icon or image
+        },
+        prepare(selection) {
+          const { title, subtitle, media } = selection;
+          return {
+            title: title || 'Untitled',
+            subtitle: subtitle || 'No description',
+            media: media || PlugIcon, // Use default icon if no media is set
+          };
+        },
+      },
 })

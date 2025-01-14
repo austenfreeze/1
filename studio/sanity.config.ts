@@ -21,6 +21,7 @@ import {
 } from '@sanity/dashboard';
 import { client } from './src/lib/sanityClient'; // Import your client if needed
 
+
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'b84na8h5';
 const dataset = process.env.SANITY_STUDIO_DATASET || 'production';

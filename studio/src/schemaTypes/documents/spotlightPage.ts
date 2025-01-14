@@ -6,10 +6,9 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'spotlightArray',
-      title: 'SPOTLIGHT',
-      type: 'array',
-      of: [{ type: 'spotlightContainer' }],
+      name: 'spotlightContainerArray',
+      title: 'Spotlight Container',
+      type: 'spotlightContainer',
     }),
   ],
 });
