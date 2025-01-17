@@ -39,6 +39,12 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: 'links',
+      title: 'Links',
+      type: 'array',
+      of: [{type: 'url'}],
+    }),
 
     defineField({
       name: 'authors',

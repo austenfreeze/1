@@ -32,6 +32,15 @@ export default defineType({
       type: 'datetime',
     }),
     defineField({
+      name: 'slug',
+      title: 'slug',
+      type: 'slug',
+      options: {
+        source: 'galleryName',
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'archived',
       title: 'Archived',
       type: 'boolean',

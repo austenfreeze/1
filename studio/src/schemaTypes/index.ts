@@ -19,6 +19,9 @@ import { pageType } from './documents/pageType';
 import spotlightPage from './documents/spotlightPage';
 import studioSettings from './singletons/studioSettings';
 import topic from './documents/topic';
+import video from './documents/video';
+import commentConversation from './documents/commentConversation';
+import album from './documents/album';
 
 
 /* OBJECTS */
@@ -49,6 +52,12 @@ import imageCard from './objects/imageCard';
 import imageCardDoc from './documents/imageCard';
 import imageGalleryDoc from './documents/imageGallery';
 import galleryReference from './objects/galleryReference';
+import platform from './objects/platform';
+import comment from './objects/comment';
+import musicSample from './objects/musicSample';
+import locationInformation from './objects/locationInformation';
+import platformLink from './objects/platformLink';
+import videoSample from './objects/videoSample';
 
 export const schemaTypes = [
   /* DOCUMENTS */
@@ -76,6 +85,8 @@ export const schemaTypes = [
   imageCardDoc,
   imageGalleryDoc,
   topic,
+  video,
+  commentConversation,
 
 
   /* OBJECTS */
@@ -102,4 +113,11 @@ export const schemaTypes = [
   imageGallery,
   imageCard,
   galleryReference,
+  comment,
+  platform,
+  musicSample,
+  locationInformation,
+  platformLink,
+  album,
+  videoSample,
 ];

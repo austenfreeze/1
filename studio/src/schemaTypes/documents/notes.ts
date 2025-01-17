@@ -23,7 +23,7 @@ export default defineType({
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [{ type: 'blockContent' }],
+      of: [{ type: 'text' }],
       validation: Rule => Rule.required().error('Required.'),
     }),
     defineField({
@@ -47,14 +47,14 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      subtitle: 'tags', // Display tags in the subtitle
+      subtitle: 'date', // Display tags in the subtitle
       media: 'icon', // Use the icon as media (can be changed to a custom image if needed)
     },
     prepare(selection) {
       const { title, subtitle, media } = selection;
       return {
         title: title || 'Untitled Note',
-        subtitle: subtitle ? subtitle.join(', ') : 'No tags', // If tags are present, display them; otherwise, show 'No tags'
+        subtitle: subtitle || 'No Date',
         media: media || GiEmerald, // Default to the icon (you can replace it with a custom image if desired)
       };
     },

@@ -1,105 +1,123 @@
 import { defineType, defineField } from 'sanity';
+import { hotspotPreview } from '../components/hotspotPreview'; // Custom tooltip preview component
+import { FiImage } from 'react-icons/fi'; // Import the FiImage icon
 
 export default defineType({
   name: 'imageCardDoc',
   title: 'Image Card',
   type: 'document',
+  icon: FiImage as typeof FiImage, // Use 'typeof FiImage' to reference the type of the icon component
   fields: [
-  defineField({
-    name: 'imageName',
-    title: 'Image Name',
-    type: 'string',
-    fieldset: 'info',
-    validation: (Rule) => Rule.required(),
-  }),
-  defineField({
-    name: 'description',
-    title: 'Description',
-    type: 'text',
-    fieldset: 'info',
-    validation: (Rule) => Rule.max(300),
-  }),
-  defineField({
-    name: 'slug',
-    title: 'Slug',
-    type: 'slug',
-    options: {
-      source: 'imageName', // Make sure 'imageName' field is populated
-      maxLength: 96,  // Optional: limit the length of the slug
-    },
-    fieldset: 'info',
-  }),
+    // Image File and Metadata
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+        metadata: ['blurhash', 'lqip', 'palette', 'location', 'exif'],
+        storeOriginalFilename: true,
+      },
+      validation: (Rule) => Rule.required().error('Image file is required'),
+      fieldset: 'image',
+    }),
+    defineField({
+      name: 'fileInfo',
+      title: 'File',
+      type: 'locationInformation',
+      fieldset: 'fileInformation',
+    }),
+    defineField({
+      name: 'imageName',
+      title: 'Image Name',
+      type: 'string',
+      validation: (Rule) => Rule.required().error('Image name is required'),
+      fieldset: 'image',
+    }),
+    defineField({
+      name: 'imageCard',
+      title: 'Media Archiving',
+      type: 'imageCard',
+      fieldset: 'card',
+    }),
 
-  // Date Tracking
-  defineField({
-    name: 'dateAdded',
-    title: 'Date Added',
-    type: 'datetime',
-    fieldset: 'date',
-  }),
-  defineField({
-    name: 'eventDate',
-    title: 'Date of Event',
-    type: 'datetime',
-    fieldset: 'date',
-  }),
+    // Image Hotspots
+    defineField({
+      name: 'hotspots',
+      title: 'Hotspot Array',
+      type: 'array',
+      of: [
+        defineField({
+          name: 'spot',
+          title: 'Spot',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              validation: (Rule) => Rule.required().error('Hotspot Title is required'),
+            }),
 
-  // Image File and Metadata
-  defineField({
-    name: 'imageFile',
-    title: 'Image File',
-    type: 'image',
-    options: {
-      hotspot: true,
-      metadata: ['blurhash', 'lqip', 'palette', 'location', 'exif'],
-      storeOriginalFilename: true,
-    },
-    fieldset: 'imageDetails',
-  }),
-  defineField({
-    name: 'altText',
-    title: 'Alt Text',
-    type: 'string',
-    description: 'Describe the image for accessibility and SEO',
-    fieldset: 'imageDetails',
-  }),
-  defineField({
-    name: 'photographer',
-    title: 'Photographer',
-    type: 'string',
-    description: 'Credit the photographer or source',
-    fieldset: 'imageDetails',
-  }),
+            defineField({
+              name: 'x',
+              title: 'X Coordinate',
+              type: 'number',
+              description: 'The X coordinate for the hotspot location (0 to 1)',
+              fieldset: 'coordinates',
+            }),
 
-  // Categorization & Tags
-  defineField({
-    name: 'tags',
-    title: 'Tags',
-    type: 'array',
-    of: [{ type: 'string' }],
-    fieldset: 'categorization',
-    options: { layout: 'tags' },
-  }),
-  defineField({
-    name: 'category',
-    title: 'Category',
-    type: 'string',
-    fieldset: 'categorization',
-    options: {
-      list: [
-        { title: 'Nature', value: 'nature' },
-        { title: 'Architecture', value: 'architecture' },
-        { title: 'Portraits', value: 'portraits' },
-        { title: 'Abstract', value: 'abstract' },
+            defineField({
+              name: 'y',
+              title: 'Y Coordinate',
+              type: 'number',
+              description: 'The Y coordinate for the hotspot location (0 to 1)',
+              fieldset: 'coordinates',
+            }),
+
+            defineField({
+              name: 'details',
+              title: 'Details',
+              type: 'text',
+              description: 'A short description for the hotspot',
+            }),
+          ],
+          fieldsets: [
+            { name: 'coordinates', title: 'Hotspot Coordinates', options: { columns: 2 } },
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'details', // Display both the x and y coordinates as the subtitle
+              media: 'imageFile',
+            },
+            prepare(selection) {
+              const { title, subtitle, media } = selection;
+              return {
+                title: title || 'Untitled Hotspot',
+                subtitle: subtitle || 'No Details',
+                media: media || FiImage,
+              };
+            },
+          },
+        }),
       ],
-    },
-  }),
-],
+      options: {
+        imageHotspot: {
+          imagePath: 'image',
+          descriptionPath: 'details',
+          tooltip: hotspotPreview, // Custom tooltip preview component added
+        },
+      },
+      validation: (Rule) => Rule.unique().error('Hotspots must be unique'),
+      fieldset: 'hotspots',
+    }),
+  ],
 
-fieldsets: [
-  { name: 'info', title: 'Image Information', options: { collapsible: true, collapsed: false } },
-  { name: 'date', title: 'Date Information', options: { collapsible: true, collapsed: false } },
-  { name: 'imageDetails', title: 'Image Details', options: { collapsible: true, collapsed: true } },
-  { name: 'categorization', title: 'Categorization & Tags', options: { collapsible: true, collapsed: true } },
-],
+  fieldsets: [
+    { name: 'hotspots', title: 'Image Hotspots', options: { collapsible: true, collapsed: true } },
+    { name: 'image', title: 'Image' },
+    { name: 'card', title: 'Card Information', options: { collapsible: true, collapsed: true } },
+    { name: 'fileInformation', title: 'File Information', options: { collapsible: true, collapsed: true } },
+  ],
 });

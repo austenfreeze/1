@@ -17,7 +17,7 @@ export default defineType({
       validation: Rule => Rule.required().error('Required.'),
     },
     {
-      name: 'name',
+      name: 'title',
       title: 'Title',
       type: 'string',
       group: 'coverPage',

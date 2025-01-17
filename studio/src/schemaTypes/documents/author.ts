@@ -6,14 +6,6 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'photo',
-      title: 'Photo',
-      type: 'image',
-      options: {
-        hotspot: true, // Corrected hotspot option
-      },
-    }),
-    defineField({
       name: 'authorName',
       title: 'Author Name',
       type: 'string',

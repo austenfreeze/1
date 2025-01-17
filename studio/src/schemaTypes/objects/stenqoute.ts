@@ -1,14 +1,18 @@
-import { defineType, defineField } from 'sanity';
+import {defineType, defineField} from 'sanity'
+import { GiFireBreath } from "react-icons/gi";
 
 export default defineType({
   name: 'stenqoute',
-  title: 'STEN Qoute',
-  type: 'object',
+  title: 'STEN Quote',
+  type: 'document',
+  icon: GiFireBreath,
   fields: [
     defineField({
-      name: 'qoute',
-      title: 'Qoute:',
-      type: 'string',
+      name: 'quoteNumber',
+      title: 'STEN QUOTE #',
+      type: 'number',
+      validation: (Rule) => Rule.required().integer().positive(),
     }),
-    ],
-    })
+  ],
+  
+})

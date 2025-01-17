@@ -1,0 +1,108 @@
+import {defineType, defineField } from 'sanity';
+
+export default defineType({
+    name: 'video',
+    title: 'Video',
+    type: 'document',
+    fields: [
+        defineField({
+            name: 'thumbnail',
+            title: 'Thumbnail',
+            type: 'reference',
+            to: [{type: 'imageCardDoc',},],
+            fieldset: 'content',
+        }),
+        defineField({
+            name: 'video',
+            title: 'Video',
+            type: 'file',
+            fieldset: 'content',
+        }),
+        defineField({
+            name: 'title',
+            title: 'Title',
+            type: 'string',
+            fieldset: 'metadata',
+        }),
+        defineField({
+            name: 'created',
+            title: 'Created On',
+            type: 'datetime',
+            fieldset: 'metadata',
+        }),
+        defineField({
+            name: 'slug',
+            title: 'Slug',
+            type: 'slug',
+            options: {source: 'title',},
+            fieldset: 'metadata',
+        }),
+        defineField({
+            name: 'description',
+            title: 'Description',
+            type: 'array',
+            of: [{type: 'blockContent',}],
+            fieldset: 'metadata',
+        }),
+        defineField({
+            name: 'locationInformation',
+            title: 'Location Information',
+            type: 'locationInformation',
+            fieldset: 'metadata',
+        }),
+        defineField({
+            name: 'links',
+            title: 'Links',
+            type: 'array',
+            of: [{type: 'platformLink',}],
+            fieldset: 'uploads',
+        }),
+        defineField({
+            name: 'stills',
+            title: 'Stills',
+            type: 'array',
+            of: [{type: 'reference',
+            to: [{type: 'imageGalleryDoc',}],
+            }],
+            fieldset: 'references',
+        }),
+        defineField({
+            name: 'quotes',
+            title: 'Quotes',
+            type: 'array',
+            of: [{type: 'reference',
+                to: [{type:'stenqoute',}],
+            }],
+            fieldset: 'references'
+        }),
+        defineField({
+            name: 'musicSamples',
+            title: 'Music Samples',
+            type: 'array',
+            of: [{type: 'musicSample',}],
+            fieldset: 'samples',
+        }),
+        defineField({
+            name: 'videoSamples',
+            title: 'Video Samples',
+            type: 'array',
+            of: [{type: 'videoSample',}],
+            fieldset: 'samples',
+        }),
+        defineField({
+            name: 'notes',
+            title: 'notes',
+            type: 'array',
+            of: [{type: 'notes',
+            }],
+        }),
+        ],
+        fieldsets: [
+            {name: 'metadata', title: 'Metadata', options: {collapsible: true, collapsed: true,},},
+            {name: 'content', title: 'Content',},
+            {name: 'references', title: 'References',},
+            {name: 'samples', title: 'Samples',},
+            {name: 'uploads', title: 'Uploads',},
+            {name: 'notes', title: 'Notes',},
+        ],
+})

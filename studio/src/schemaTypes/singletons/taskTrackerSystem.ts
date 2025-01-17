@@ -12,7 +12,8 @@ export default {
     {
       name: 'newTracker',
       type: 'array',
-      of: [{ type: 'tracker' }],
+      of: [{ type: 'reference',
+        to: [{type: 'tracker',}], }],
       title: 'New Tracker',
     },
   ],

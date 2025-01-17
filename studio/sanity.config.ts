@@ -1,44 +1,44 @@
-import { defineConfig } from 'sanity';
-import { structure } from './src/structure';
-import { structureTool } from 'sanity/structure';
-import { visionTool } from '@sanity/vision';
-import { schemaTypes } from './src/schemaTypes';
-import { tags } from 'sanity-plugin-tags';
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
+import {defineConfig} from 'sanity'
+import {structure} from './src/structure'
+import {structureTool} from 'sanity/structure'
+import {visionTool} from '@sanity/vision'
+import {schemaTypes} from './src/schemaTypes'
+import {tags} from 'sanity-plugin-tags'
+import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
 import {
   presentationTool,
   defineDocuments,
   defineLocations,
   type DocumentLocation,
-} from 'sanity/presentation';
-import { assist } from '@sanity/assist';
-import { media } from 'sanity-plugin-media';
+} from 'sanity/presentation'
+import {assist} from '@sanity/assist'
+import {media} from 'sanity-plugin-media'
 import {
   dashboardTool,
   sanityTutorialsWidget,
   projectUsersWidget,
   projectInfoWidget,
-} from '@sanity/dashboard';
-import { client } from './src/lib/sanityClient'; // Import your client if needed
-
+} from '@sanity/dashboard'
+import {client} from './src/lib/sanityClient' // Import your client if needed
+import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 
 // Environment variables for project configuration
-const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'b84na8h5';
-const dataset = process.env.SANITY_STUDIO_DATASET || 'production';
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'b84na8h5'
+const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
 
 // URL for preview functionality, defaults to localhost:3000 if not set
-const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000';
+const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000'
 
 // Define the home location for the presentation tool
 const homeLocation = {
   title: 'Home',
   href: '/',
-} satisfies DocumentLocation;
+} satisfies DocumentLocation
 
 // Main Sanity configuration
 export default defineConfig({
   name: 'default',
-  title: 'acf',  // Customize the title of your studio
+  title: 'acf', // Customize the title of your studio
   structure,
   projectId,
   dataset,
@@ -46,15 +46,11 @@ export default defineConfig({
   // Plugins
   plugins: [
     dashboardTool({
-      widgets: [
-        sanityTutorialsWidget(),
-        projectInfoWidget(),
-        projectUsersWidget(),
-      ],
+      widgets: [sanityTutorialsWidget(), projectInfoWidget(), projectUsersWidget()],
     }),
 
     media(), // Media plugin for asset handling
-
+    imageHotspotArrayPlugin(),
     presentationTool({
       previewUrl: {
         origin: SANITY_STUDIO_PREVIEW_URL,
@@ -129,8 +125,8 @@ export default defineConfig({
             _type: 'tag',
             label: inputValue,
             value: inputValue.toLowerCase().replace(/\s+/g, '-'), // Make it URL friendly
-          };
-          return newTag; // Return the created tag object
+          }
+          return newTag // Return the created tag object
         },
         reactSelectOptions: {
           // Customize the react-select options if needed
@@ -150,17 +146,17 @@ export default defineConfig({
   schema: {
     types: schemaTypes, // Import your schema types here
   },
-});
+})
 
 // ResolveHref function to build the URL
 function resolveHref(documentType?: string, slug?: string): string | undefined {
   switch (documentType) {
     case 'post':
-      return slug ? `/posts/${slug}` : undefined;
+      return slug ? `/posts/${slug}` : undefined
     case 'page':
-      return slug ? `/${slug}` : undefined;
+      return slug ? `/${slug}` : undefined
     default:
-      console.warn('Invalid document type:', documentType);
-      return undefined;
+      console.warn('Invalid document type:', documentType)
+      return undefined
   }
 }

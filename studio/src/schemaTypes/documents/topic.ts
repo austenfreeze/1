@@ -9,7 +9,7 @@ export default defineType({
   icon: GiConversation,
   fields: [
     defineField({
-      name: 'name',
+      name: 'title',
       title: 'Topic Title',
       type: 'string',
     validation: Rule => Rule.required().error('Required.'),
@@ -27,6 +27,13 @@ export default defineType({
         validation: Rule => Rule.required().min(66).max(399).error('Required.'),
     }),
     defineField({
+      name: 'related',
+      title: 'Sources',
+      type: 'array',
+      of: [{type: 'string'}],
+      description: 'this temporary placeholder is intended to links to related content.',
+    }),
+    defineField({
         name: 'notes',
         title: 'Notes',
         type: 'array',
@@ -37,15 +44,15 @@ export default defineType({
 ],
 preview: {
     select: {
-      title: 'name',
-      subtitle: 'description', 
+      title: 'title',
+      subtitle: 'description',
       media: 'icon', // Use the icon as media (can be changed to a custom image if needed)
     },
     prepare(selection) {
       const { title, subtitle, media } = selection;
       return {
         title: title || 'Untitled Note',
-        subtitle: subtitle ? subtitle.join(', ') : 'No Description', // If tags are present, display them; otherwise, show 'No tags'
+        subtitle: subtitle || 'No Subtitle',
         media: media || GiConversation, // Default to the icon (you can replace it with a custom image if desired)
       };
     },

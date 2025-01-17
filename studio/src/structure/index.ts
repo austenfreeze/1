@@ -114,6 +114,14 @@ export const structure = (S: StructureBuilder) => {
                     .title('FOIA Release')
                     .filter('_type == "foia"')  // Ensure this matches your schema type
                 ),
+                              // FOIA Release Section
+              S.listItem()
+              .title('Video')
+              .child(
+                S.documentList()
+                  .title('Videos')
+                  .filter('_type == "video"')  // Ensure this matches your schema type
+              ),
               
               // STEN Quotes Section
               S.listItem()
