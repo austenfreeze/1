@@ -13,12 +13,10 @@ import {
 } from 'sanity/presentation'
 import {assist} from '@sanity/assist'
 import {media} from 'sanity-plugin-media'
-import {
-  dashboardTool,
-  sanityTutorialsWidget,
-  projectUsersWidget,
-  projectInfoWidget,
-} from '@sanity/dashboard'
+import {dashboardTool, projectUsersWidget, projectInfoWidget} from '@sanity/dashboard'
+import {documentListWidget} from 'sanity-plugin-dashboard-widget-document-list'
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {client} from './src/lib/sanityClient' // Import your client if needed
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 
@@ -45,12 +43,22 @@ export default defineConfig({
 
   // Plugins
   plugins: [
-    dashboardTool({
-      widgets: [sanityTutorialsWidget(), projectInfoWidget(), projectUsersWidget()],
+    structureTool({
+      structure, // Custom studio structure configuration, imported from ./src/structure.ts
     }),
 
     media(), // Media plugin for asset handling
     imageHotspotArrayPlugin(),
+
+    dashboardTool({
+      widgets: [
+        documentListWidget({title: 'New', order: '_createdAt desc'}),
+        documentListWidget({title: 'Last Edited', order: '_updatedAt desc'}),
+        projectInfoWidget(),
+        projectUsersWidget(),
+      ],
+    }),
+
     presentationTool({
       previewUrl: {
         origin: SANITY_STUDIO_PREVIEW_URL,
@@ -109,10 +117,6 @@ export default defineConfig({
           }),
         },
       },
-    }),
-
-    structureTool({
-      structure, // Custom studio structure configuration, imported from ./src/structure.ts
     }),
 
     tags({

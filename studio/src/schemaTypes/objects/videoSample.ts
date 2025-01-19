@@ -1,71 +1,55 @@
 import { defineType, defineField } from 'sanity';
 
-export default defineType({
+const videoSample = defineType({
   name: 'videoSample',
   title: 'Video Sample',
   type: 'object',
-  fieldsets: [
-    {
-      name: 'videoDetails',
-      title: 'Video Details',
-      options: { collapsible: true, collapsed: false },
-    },
-  ],
+  fieldsets: [{ name: 'videoDetails', title: 'Video Details', options: { collapsible: true, collapsed: false } }],
   fields: [
-    defineField({
-      name: 'thumbnail',
-      title: 'Thumbnail',
-      type: 'image',
-      fieldset: 'videoDetails',
-      options: { hotspot: true },
-      validation: (Rule) => Rule.required().error('A thumbnail is required.'),
-    }),
-    defineField({
-      name: 'title',
-      title: 'Video Title',
-      type: 'string',
-      fieldset: 'videoDetails',
-      validation: (Rule) =>
-        Rule.required()
-          .min(2)
-          .max(100)
-          .error('Video title must be between 2 and 100 characters.'),
-    }),
-    defineField({
-      name: 'creator',
-      title: 'Creator',
-      type: 'reference',
-      to: [{ type: 'author' }],
-      fieldset: 'videoDetails',
-      validation: (Rule) => Rule.required().error('A creator must be selected.'),
-    }),
-    defineField({
-      name: 'videoFile',
-      title: 'Video File',
-      type: 'file',
-      fieldset: 'videoDetails',
-      options: {
-        accept: 'video/*',
-      },
-    }),
-    defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
-      fieldset: 'videoDetails',
-      validation: (Rule) =>
-        Rule.max(500).error('Description cannot exceed 500 characters.'),
-    }),
-    defineField({
-      name: 'releaseDate',
-      title: 'Release Date',
-      type: 'date',
-      fieldset: 'videoDetails',
-      options: {
-        dateFormat: 'YYYY-MM-DD',
-      },
-      validation: (Rule) => Rule.required().error('Release date is required.'),
-    }),
+      defineField({
+          name: 'thumbnail',
+          title: 'Thumbnail',
+          type: 'image',
+          fieldset: 'videoDetails',
+      }),
+      defineField({
+          name: 'title',
+          title: 'Video Title',
+          type: 'string',
+          fieldset: 'videoDetails',
+      }),
+      defineField({
+          name: 'creator',
+          title: 'Creator',
+          type: 'reference',
+          to: [{ type: 'author' }],
+          fieldset: 'videoDetails',
+      }),
+      defineField({
+        name: 'releaseDate',
+        title: 'Release Date',
+        type: 'datetime',
+      }),
+      defineField({
+          name: 'videoFile',
+          title: 'Video File',
+          type: 'file',
+          fieldset: 'videoDetails',
+      }),
+      defineField({
+          name: 'stills',
+          title: 'Stills',
+          type: 'array',
+          of: [{ type: 'reference', to: [{ type: 'imageGalleryDoc' }] }],
+          fieldset: 'videoDetails',
+      }),
+      defineField({
+          name: 'quotes',
+          title: 'Quotes',
+          type: 'array',
+          of: [{ type: 'reference', to: [{ type: 'stenqoute' }] }],
+          fieldset: 'videoDetails',
+      }),
   ],
   preview: {
     select: {
@@ -83,3 +67,5 @@ export default defineType({
     },
   },
 });
+
+export default videoSample;

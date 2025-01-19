@@ -43,7 +43,9 @@ export const structure = (S: StructureBuilder) => {
             .title('Headlines')
             .filter('_type == "headline"')  // Ensure this matches your schema type
         ),
-        
+
+      S.divider(),
+
       // Spotlight Page as Singleton Document
       S.listItem()
         .title('Spotlight')
@@ -54,6 +56,8 @@ export const structure = (S: StructureBuilder) => {
             .id('spotlightPage')  // Specific ID for the singleton document
         ),
 
+        S.divider(),
+
       // Projects Section
       S.listItem()
         .title('Projects')
@@ -62,6 +66,8 @@ export const structure = (S: StructureBuilder) => {
             .title('Projects')
             .filter('_type == "project"')  // Ensure this matches your schema type
         ),
+
+        S.divider(),
 
       // Publish Section with Dropdown
       S.listItem()
@@ -78,6 +84,9 @@ export const structure = (S: StructureBuilder) => {
                     .title('Posts')
                     .filter('_type == "post"')  // Ensure this matches your schema type
                 ),
+
+
+                S.divider(),
               
               // Articles Section
               S.listItem()
@@ -87,6 +96,8 @@ export const structure = (S: StructureBuilder) => {
                     .title('Articles')
                     .filter('_type == "article"')  // Ensure this matches your schema type
                 ),
+
+                S.divider(),
               
               // Notes Section
               S.listItem()
@@ -96,6 +107,8 @@ export const structure = (S: StructureBuilder) => {
                     .title('Notes')
                     .filter('_type == "notes"')  // Ensure this matches your schema type
                 ),
+
+                S.divider(),
               
               // Free Samples Section
               S.listItem()
@@ -105,6 +118,8 @@ export const structure = (S: StructureBuilder) => {
                     .title('Free Samples')
                     .filter('_type == "freesamples"')  // Ensure this matches your schema type
                 ),
+
+                S.divider(),
               
               // FOIA Release Section
               S.listItem()
@@ -114,7 +129,11 @@ export const structure = (S: StructureBuilder) => {
                     .title('FOIA Release')
                     .filter('_type == "foia"')  // Ensure this matches your schema type
                 ),
-                              // FOIA Release Section
+
+                S.divider(),
+              
+              
+                // FOIA Release Section
               S.listItem()
               .title('Video')
               .child(
@@ -122,6 +141,8 @@ export const structure = (S: StructureBuilder) => {
                   .title('Videos')
                   .filter('_type == "video"')  // Ensure this matches your schema type
               ),
+
+              S.divider(),
               
               // STEN Quotes Section
               S.listItem()
@@ -132,6 +153,8 @@ export const structure = (S: StructureBuilder) => {
                     .filter('_type == "stenquotes"')  // Ensure this matches your schema type
                 ),
               
+              S.divider(),
+
               // Spotlight Articles under Publish
               S.listItem()
                 .title('Spotlight Articles')
@@ -147,7 +170,11 @@ export const structure = (S: StructureBuilder) => {
                     .title('Image Card')
                     .filter('_type == "imageCardDoc"')
                     .id('imageCard')  // Add an ID for this list
-                ),              
+                ),
+                
+                S.divider(),
+
+
               S.listItem()
               .title('Image Gallery')
               .child(
@@ -157,7 +184,12 @@ export const structure = (S: StructureBuilder) => {
               .id('imageGallery')
             ),
 
+            S.divider(),
+
             ])
         ),
+
+        S.divider(),
+        
     ]);
 };

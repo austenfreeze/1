@@ -1,5 +1,4 @@
 /* DOCUMENTS */
-import user from './documents/user';
 import project from './documents/project';
 import headlines from './documents/headlines';
 import task from './documents/task';
@@ -61,7 +60,6 @@ import videoSample from './objects/videoSample';
 
 export const schemaTypes = [
   /* DOCUMENTS */
-  user,
   project,
   headlines,
   post,
